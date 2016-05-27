@@ -13,7 +13,7 @@
 // // Click the 'Run' button at the top to start your server,
 // // then click the URL that is emitted to the Output tab of the console
 const VIDEO_SCALE = 20
-const CATEGORY_SCALE = 20
+const COLLECTION_SCALE = 20
 
 var _ = require('lodash');
 
@@ -25,7 +25,7 @@ server.connection({
     host: process.env.IP
 });
 var Wreck = require('wreck');
-const url = "https://storage.googleapis.com/android-tv/android_tv_videos_new.json";
+const url = "http://api.platform.cnn.com/api/v1.5/clips/curated/appletv/20";
 server.route({
     method: 'GET',
     path: '/',
@@ -84,13 +84,13 @@ function more_videos(obj) {
     return obj;
 }
 
-function more_categories(obj) {
-    obj.googlevideos = _.flatMap(obj.googlevideos, function(list) {
+function more_collections(obj) {
+    obj.googlevideos = _.flatMap(obj, function(list) {
         // console.log(list.category)
         var list_string = JSON.stringify(list);
-        var rr = _.map(_.range(CATEGORY_SCALE), function(index) {
+        var rr = _.map(_.range(COLLECTION_SCALE), function(index) {
                 var r = JSON.parse(list_string);
-                r.category += index
+                r.collectionName += index
                 return r
             })
             //   console.log(rr);
@@ -101,5 +101,5 @@ function more_categories(obj) {
 
 function manipulate_google_video_feed(obj) {
     // console.log(obj)
-    return more_videos(more_categories(obj));
+    return more_videos(more_collections(obj));
 }
