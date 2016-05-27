@@ -13,7 +13,7 @@
 // // Click the 'Run' button at the top to start your server,
 // // then click the URL that is emitted to the Output tab of the console
 const VIDEO_SCALE = 2
-const COLLECTION_SCALE = 4
+const COLLECTION_SCALE = 1
 
 var _ = require('lodash');
 
@@ -63,14 +63,14 @@ server.start(function() {
 
 
 function more_videos(obj) {
-    obj.googlevideos = _.map(obj.googlevideos, function(list) {
+    obj = _.map(obj, function(list) {
         // console.log(list.category)
         var rrr = _.flatMap(list.videos, function(video) {
             // console.log(video.title)
             var video_string = JSON.stringify(video);
             var rr = _.map(_.range(VIDEO_SCALE), function(index) {
                     var r = JSON.parse(video_string);
-                    r.title += list.category;
+                    r.title += list.collectionName;
                     r.title += index;
                     return r
                 })
