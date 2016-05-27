@@ -7,13 +7,13 @@
 //     res.end("Hello world from Cloud9!");
 // }).listen(process.env.PORT, process.env.IP);
 
-// // Note: when spawning a server on Cloud9 IDE, 
+// // Note: when spawning a server on Cloud9 IDE,
 // // listen on the process.env.PORT and process.env.IP environment variables
 
 // // Click the 'Run' button at the top to start your server,
 // // then click the URL that is emitted to the Output tab of the console
-const VIDEO_SCALE = 20
-const COLLECTION_SCALE = 20
+const VIDEO_SCALE = 2
+const COLLECTION_SCALE = 4
 
 var _ = require('lodash');
 
@@ -85,7 +85,7 @@ function more_videos(obj) {
 }
 
 function more_collections(obj) {
-    obj.googlevideos = _.flatMap(obj, function(list) {
+    obj = _.flatMap(obj, function(list) {
         // console.log(list.category)
         var list_string = JSON.stringify(list);
         var rr = _.map(_.range(COLLECTION_SCALE), function(index) {
