@@ -12,8 +12,8 @@
 
 // // Click the 'Run' button at the top to start your server,
 // // then click the URL that is emitted to the Output tab of the console
-const VIDEO_SCALE = 5
-const CATEGORY_SCALE = 5
+const VIDEO_SCALE = 20
+const CATEGORY_SCALE = 20
 
 var _ = require('lodash');
 
@@ -70,7 +70,8 @@ function more_videos(obj) {
             var video_string = JSON.stringify(video);
             var rr = _.map(_.range(VIDEO_SCALE), function(index) {
                     var r = JSON.parse(video_string);
-                    r.title += index
+                    r.title += list.category;
+                    r.title += index;
                     return r
                 })
                 //   console.log(rr);
@@ -99,6 +100,6 @@ function more_categories(obj) {
 }
 
 function manipulate_google_video_feed(obj) {
-    console.log(obj)
-    return more_videos(obj);
+    // console.log(obj)
+    return more_videos(more_categories(obj));
 }
