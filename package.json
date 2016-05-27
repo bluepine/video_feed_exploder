@@ -1,0 +1,26 @@
+{
+  "name": "video_feed_exploder",
+  "version": "1.0.0",
+  "description": "expand video feeds from certain endpoints for stress testing",
+  "main": "server.js",
+  "dependencies": {
+    "hapi": "^13.4.1",
+    "lodash": "^4.13.1",
+    "wreck": "^7.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bluepine/video_feed_exploder.git"
+  },
+  "author": "Song Wei<1983.song.wei@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/bluepine/video_feed_exploder/issues"
+  },
+  "homepage": "https://github.com/bluepine/video_feed_exploder#readme"
+}
