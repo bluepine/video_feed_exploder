@@ -12,8 +12,8 @@
 
 // // Click the 'Run' button at the top to start your server,
 // // then click the URL that is emitted to the Output tab of the console
-const VIDEO_SCALE = 2
-const COLLECTION_SCALE = 1
+const VIDEO_SCALE = 3
+const COLLECTION_SCALE = 3
 
 var _ = require('lodash');
 
