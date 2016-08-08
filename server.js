@@ -15,21 +15,89 @@
 const VIDEO_SCALE = 3
 const COLLECTION_SCALE = 3
 
-var _ = require('lodash');
+//please set those values according to the config file the app is using
+const paths = {
+  clipsCategories: "/api/v1.5/clips/categories/appletv",
+  clipsForCategory: "/api/v1.5/clips/category/appletv/{blabla}",
+  clipsCollections: "/api/v1.5/clips/curated/appletv/{num}",
+  m3u8Lookup: "/api/v1.5/video/item/appletv/{blabla}",
+  search: "/api/v1.5/search/appletv/{blabla}"
+}
 
-var Hapi = require('hapi');
+const host = "api.platform.cnn.com"
 
-var server = new Hapi.Server();
+
+
+const _ = require('lodash');
+
+const Hapi = require('hapi');
+
+const server = new Hapi.Server();
 server.connection({
     port: process.env.PORT,
     host: process.env.IP
 });
-var Wreck = require('wreck');
-const url = "http://api.platform.cnn.com/api/v1.5/clips/curated/appletv/20";
-server.route({
+
+const pathThroughHandler = {
+  proxy: {
+    host: host,
+    port: 80,
+    protocol: 'http',
+    passThrough: true,
+    xforward: true
+  }
+}
+
+const Wreck = require('wreck');
+const h2o2 = require('h2o2')
+
+server.register({
+    register: require('h2o2')
+}, function (err) {
+
+    if (err) {
+        console.log('Failed to load h2o2');
+    }
+
+    server.start(function (err) {
+        console.log('Server started at: ' + server.info.uri);
+    });
+});
+
+server.route(
+  {
     method: 'GET',
-    path: '/',
+    path: paths.clipsCategories,
+    handler:pathThroughHandler
+  }
+);
+server.route(
+  {
+    method: 'GET',
+    path: paths.m3u8Lookup,
+    handler:pathThroughHandler
+  }
+);
+server.route(
+  {
+    method: 'GET',
+    path: paths.search,
+    handler:pathThroughHandler
+  }
+);
+server.route(
+  {
+    method: 'GET',
+    path: paths.clipsForCategory,
+    handler:pathThroughHandler
+  }
+);
+server.route(
+  {
+    method: 'GET',
+    path: paths.clipsCollections,
     handler: function(request, reply) {
+        var url = request.connection.info.protocol + '://' + host + request.url.path;
         Wreck.get(url, function(err, res, payload) {
             const headers = ['cache-control', 'content-type'];
 
@@ -55,10 +123,6 @@ server.route({
             response.send();
         });
     }
-});
-
-server.start(function() {
-    console.log('Server running at:', server.info.uri);
 });
 
 
