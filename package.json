@@ -4,8 +4,7 @@
   "description": "expand video feeds from certain endpoints for stress testing",
   "main": "server.js",
   "dependencies": {
-    "h2o2": "^5.1.0",
-    "hapi": "^14.1.0",
+    "hapi": "^13.4.1",
     "lodash": "^4.13.1",
     "wreck": "^7.2.1"
   },
